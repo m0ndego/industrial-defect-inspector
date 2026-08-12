@@ -1,0 +1,27 @@
+seed: 42
+
+data:
+  category: bottle
+  root: data/processed/bottle
+  image_size: 256
+  validation_ratio: 0.2
+  num_workers: 0
+
+autoencoder:
+  batch_size: 16
+  epochs: 30
+  learning_rate: 0.001
+
+patchcore:
+  backbone: resnet18
+  layers: [layer2, layer3]
+  pre_trained: true
+  coreset_sampling_ratio: 0.1
+  num_neighbors: 9
+
+scoring:
+  normal_threshold_quantile: 0.99
+  image_score_quantile: 0.99
+
+artifacts:
+  root: artifacts

@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "industrial-defect-inspector"
+version = "0.1.0"
+description = "Reproducible industrial anomaly detection with a convolutional autoencoder and PatchCore"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { file = "LICENSE" }
+dependencies = [
+  "anomalib==2.6.0",
+  "numpy>=2.1,<3",
+  "pillow>=11,<13",
+  "pyyaml>=6,<7",
+  "scikit-learn>=1.6,<2",
+  "torch>=2.9,<3",
+]
+
+[project.optional-dependencies]
+cuda = [
+  "anomalib[cu130]==2.6.0",
+  "torch>=2.9,<3",
+  "torchcodec>=0.9",
+  "torchvision>=0.24",
+]
+cpu = [
+  "anomalib[cpu]==2.6.0",
+  "torch>=2.6,<3",
+  "torchcodec",
+  "torchvision>=0.21",
+]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.12,<1",
+]
+
+[project.scripts]
+defect-inspector = "defect_inspector.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/defect_inspector"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.uv]
+conflicts = [[{ extra = "cuda" }, { extra = "cpu" }]]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu130", extra = "cuda" },
+  { index = "pytorch-cpu", extra = "cpu" },
+]
+torchvision = [
+  { index = "pytorch-cu130", extra = "cuda" },
+  { index = "pytorch-cpu", extra = "cpu" },
+]
+torchcodec = [
+  { index = "pytorch-cu130", extra = "cuda" },
+  { index = "pytorch-cpu", extra = "cpu" },
+]
