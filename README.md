@@ -1,5 +1,7 @@
 # Industrial Defect Inspector
 
+[![CI](https://github.com/m0ndego/industrial-defect-inspector/actions/workflows/ci.yml/badge.svg)](https://github.com/m0ndego/industrial-defect-inspector/actions/workflows/ci.yml)
+
 一个可复现的工业外观缺陷检测项目：自己实现卷积自编码器基线，并使用 Anomalib 2.6.0
 复现 PatchCore，在 MVTec AD Bottle 上比较图像级检测和像素级定位效果。
 
